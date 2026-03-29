@@ -241,6 +241,7 @@
         }
 
         /* ── IMAGES INSIDE CONTENT TEXT ── */
+        /* width:100% force toutes les images (y compris les .png) à occuper toute la largeur */
         .content-text img {
             width: 100%;
             max-width: 100%;
@@ -311,7 +312,6 @@
         ══════════════════════════════════ */
         @media (max-width: 768px) {
 
-            /* Nav: logo left, hamburger right */
             .nav-container {
                 flex-wrap: nowrap;
                 justify-content: space-between;
@@ -331,7 +331,6 @@
 
             .nav-links.open { display: flex; }
 
-            /* Make nav wrap when menu opens */
             .nav-container.menu-open {
                 flex-wrap: wrap;
             }
@@ -348,11 +347,9 @@
 
             .content-card { padding: 1.5rem 1rem; }
 
-            /* Stack content images vertically */
             .content-image { flex-direction: column; }
             .content-image img { max-width: 100%; }
 
-            /* Iframes shorter on mobile */
             .content-text iframe { height: 300px; }
         }
 
@@ -365,7 +362,7 @@
 <body>
     <nav>
         <div class="nav-container" id="navContainer">
-            <div class="logo" onclick="showPage('home')">📚 Tarihimiz</div>
+            <div class="logo" onclick="showPage('home')"> Tarihimiz</div>
             <div class="hamburger" id="hamburger" onclick="toggleMenu()">
                 <span></span><span></span><span></span>
             </div>
@@ -502,16 +499,16 @@
                     <img src="490_01_611_121_1_2.jpg" alt="evrak">
 
                     <h2>Karamanlı Hasan Gemalmaz'a Türkçe Tekbir Tebligatı (TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
-                    <iframe src="Arapça tekbir alan Karamanlı Hasan Gemalmaz'a TÜrkçe tekbir alınması için tebligat yapılıp yapılmadığının bildirilmesi..pdf" title="Evrak"></iframe>
+                    <img src="cankiri.png" alt="belge">
 
                     <h2>Arapça Ezan Yasağı Kanunu</h2>
-                    <iframe src="arapca_ezan_yasagi_kanunu.pdf" title="Ezan Yasağı Kanunu"></iframe>
+                    <img src="arapca_yasak.png" alt="Ezan Yasağı Kanunu">
 
                     <h2>Camilerde Arapça Tekbir Yasağı Tebligatı</h2>
-                    <iframe src="Camilerde dua ve vaaz esnasında Arapça tekbir alan cemaata uyarıda bulunulması için imam ve müezzinlere tebligat yapılıp yapılmadığının bildirilmesi..pdf" title="Evrak"></iframe>
+                    <img src="yasak_tebligat.png" alt="evrak">
 
                     <h2>İsmail Yiğit'in Arapça Tekbir Soruşturması (Çankırı/Çerkeş)</h2>
-                    <iframe src="Çankırı'nın Çerkeş kazasında İsmail Yiğit'in namaz arasında Arapça tekbir getirdiğinden hakkında soruşturma açıldığı..pdf" title="Evrak"></iframe>
+                    <img src="cankiri.png" alt="evrak">
 
                     <h2>Enver ve Cemal Paşaların ifrat derecede Alman siyaseti gütmelerine karşı milli bir siyaset takip etmek üzere İttihat ve Terakki azası Osmanlı Erkan-ı Harbiyesi subaylarından Mustafa Kemal Paşa'nın başkanlığında yeni bir fırka kurulduğu, Irak ve Sina cephelerinde Osmanlı ordusunun yenilgiye uğramasının Enver ve Cemal paşaların konumlarını sarstığı ve yeni fırkanın idareyi ele almak için müsait bir zaman gözetmekte olduğu ifadelerini havi Mekke'de çıkan el-Kıble gazetesinden naklen La Tribune de Geneve gazetesinin "Enver ve Cemal Paşalar İlk Fırsatta İktidardan Düşecekler" başlıklı makalesi (TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
                     <img src="ENVERV~1.JPG" alt="evrak">
@@ -520,7 +517,7 @@
                     <img src="İstanbul'da Kağıt ve Basım İşleri AŞ Matbaası'nda basılan Ayet, Hadis ve ahlaki bilgiler veren Arapca levhaların dağıtımının durdurulması vetoplatılması..jpg" alt="evrak">
 
                     <h2>Ramazan'da Ezan ve Tekbirlerin Türkçe Okutturulması</h2>
-                    <iframe src="Ramazan'da hutbelerin Diyanet'in tespit ettiği konularda, Diyanet'çebelge verilen vaizlerce okunabileceği, ezan ve tekbirlerin Türkçe okutturulacağına dair..pdf" title="Evrak"></iframe>
+                    <img src="ramazan_hutbe.png" alt="evrak">
 
                     <h2>Kemalizm Döneminde Çarşaf Yasağı (Cumhuriyet Gazetesi – 1 Eylül 1935)</h2>
                     <img src="carsaf_yasagi.jpeg" alt="gazete">
@@ -596,7 +593,6 @@
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            // close menu on navigation
             closeMenu();
         }
 

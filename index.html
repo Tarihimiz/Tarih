@@ -2,8 +2,8 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarih Bilgilendirme</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Arşiv</title>
     <style>
         * {
             margin: 0;
@@ -18,10 +18,11 @@
             color: #e0e0e0;
         }
 
+        /* ── NAV ── */
         nav {
-            background: rgba(20, 20, 20, 0.95);
+            background: rgba(20, 20, 20, 0.97);
             backdrop-filter: blur(10px);
-            padding: 1.8rem 2rem;
+            padding: 1rem;
             box-shadow: 0 4px 30px rgba(0,0,0,0.5);
             border-bottom: 1px solid rgba(255, 215, 0, 0.2);
             position: sticky;
@@ -35,12 +36,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
+            gap: 0.8rem;
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.4rem;
             font-weight: 700;
             background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
             -webkit-background-clip: text;
@@ -48,47 +48,55 @@
             background-clip: text;
             cursor: pointer;
             transition: all 0.3s;
-            letter-spacing: 0.5px;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
-        .logo:hover {
-            transform: scale(1.05);
-            filter: brightness(1.2);
+        .logo:hover { transform: scale(1.05); filter: brightness(1.2); }
+
+        /* Hamburger */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 6px;
+            border: 1px solid rgba(255,215,0,0.3);
+            border-radius: 8px;
+            background: rgba(255,215,0,0.05);
+            flex-shrink: 0;
         }
+        .hamburger span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: #ffd700;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+        .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .hamburger.open span:nth-child(2) { opacity: 0; }
+        .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
         .nav-links {
             display: flex;
-            gap: 1rem;
+            gap: 0.6rem;
             flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         .nav-link {
             color: #d4d4d4;
             text-decoration: none;
             font-weight: 500;
-            padding: 0.7rem 1.5rem;
+            padding: 0.55rem 1rem;
             border-radius: 10px;
-            transition: all 0.4s;
+            transition: all 0.3s;
             cursor: pointer;
             border: 1px solid rgba(255, 215, 0, 0.2);
             background: rgba(255, 255, 255, 0.03);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-link::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .nav-link:hover::before {
-            left: 100%;
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
 
         .nav-link:hover {
@@ -99,39 +107,30 @@
             box-shadow: 0 5px 20px rgba(255, 215, 0, 0.2);
         }
 
+        /* ── CONTAINER ── */
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 4rem 2rem;
+            padding: 2rem 1rem;
         }
 
-        .page {
-            display: none;
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        .page.active {
-            display: block;
-        }
+        /* ── PAGES ── */
+        .page { display: none; animation: fadeIn 0.5s ease-out; }
+        .page.active { display: block; }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
+        /* ── HERO ── */
         .hero {
-            background: linear-gradient(135deg, rgba(30, 30, 30, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
-            border-radius: 25px;
-            padding: 5rem 4rem;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.7), 0 0 1px rgba(255, 215, 0, 0.3);
+            background: linear-gradient(135deg, rgba(30,30,30,0.95) 0%, rgba(20,20,20,0.98) 100%);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.7);
             text-align: center;
-            border: 1px solid rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(255,215,0,0.15);
             position: relative;
             overflow: hidden;
         }
@@ -139,26 +138,24 @@
         .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.05) 0%, transparent 70%);
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.05) 0%, transparent 70%);
             animation: pulse 8s infinite;
         }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 0.8; }
+            50%       { transform: scale(1.1); opacity: 0.8; }
         }
 
         .hero h1 {
-            font-size: 3rem;
+            font-size: clamp(1.6rem, 5vw, 3rem);
             background: linear-gradient(135deg, #ffffff 0%, #ffd700 50%, #ffffff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             line-height: 1.3;
             font-weight: 700;
             position: relative;
@@ -166,198 +163,231 @@
         }
 
         .hero p {
-            font-size: 1.2rem;
+            font-size: clamp(0.95rem, 2.5vw, 1.2rem);
             color: #c0c0c0;
-            line-height: 1.9;
+            line-height: 1.8;
             max-width: 900px;
             margin: 0 auto;
             position: relative;
             z-index: 1;
         }
 
+        /* ── CONTENT CARD ── */
         .content-card {
-            background: linear-gradient(135deg, rgba(25, 25, 25, 0.95) 0%, rgba(18, 18, 18, 0.98) 100%);
-            border-radius: 25px;
-            padding: 4rem 3.5rem;
-            box-shadow: 0 15px 50px rgba(0,0,0,0.7), 0 0 1px rgba(255, 215, 0, 0.3);
+            background: linear-gradient(135deg, rgba(25,25,25,0.95) 0%, rgba(18,18,18,0.98) 100%);
+            border-radius: 20px;
+            padding: 2rem 1.2rem;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.7);
             margin-bottom: 2rem;
-            border: 1px solid rgba(255, 215, 0, 0.15);
+            border: 1px solid rgba(255,215,0,0.15);
         }
 
         .content-card h1 {
-            font-size: 2.5rem;
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
             background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 2.5rem;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-            padding-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(255,215,0,0.3);
+            padding-bottom: 1.2rem;
             font-weight: 700;
         }
 
+        /* ── IMAGE ZONE ── */
         .content-image {
             width: 100%;
-            max-width: 700px;
-            height: 450px;
-            background: linear-gradient(135deg, rgba(40, 40, 40, 0.8) 0%, rgba(30, 30, 30, 0.9) 100%);
-            border-radius: 20px;
-            margin: 2.5rem auto;
+            border-radius: 16px;
+            margin: 1.5rem auto;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #ffd700;
-            font-size: 1.5rem;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.6), inset 0 0 60px rgba(255, 215, 0, 0.05);
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            font-weight: 500;
-            transition: all 0.4s;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(40,40,40,0.4);
+            border: 1px solid rgba(255,215,0,0.1);
         }
 
-        .content-image:hover {
-            transform: scale(1.02);
-            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.2);
+        .content-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            object-fit: contain;
         }
 
+        /* ── CONTENT TEXT ── */
         .content-text {
-            font-size: 1.15rem;
-            line-height: 2;
+            font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+            line-height: 1.9;
             color: #b8b8b8;
-            margin-top: 2.5rem;
+            margin-top: 1.5rem;
         }
 
-        .content-text p {
-            margin-bottom: 1.8rem;
-            text-align: justify;
+        .content-text p { margin-bottom: 1.5rem; text-align: justify; }
+
+        .content-text h2 {
+            font-size: clamp(1rem, 3.5vw, 1.4rem);
+            color: #ffd700;
+            margin: 2rem 0 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255,215,0,0.2);
         }
 
+        .content-text h3 {
+            font-size: clamp(0.95rem, 3vw, 1.2rem);
+            color: #e0c060;
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        /* ── IMAGES INSIDE CONTENT TEXT ── */
+        .content-text img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            display: block;
+            margin: 0.8rem 0;
+            object-fit: contain;
+        }
+
+        /* Side-by-side images → stacked on small screens */
+        .img-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+        .img-row img {
+            flex: 1 1 200px;
+            max-width: 100%;
+        }
+
+        /* ── IFRAMES ── */
+        .content-text iframe {
+            width: 100% !important;
+            max-width: 100%;
+            height: 400px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,215,0,0.2);
+            display: block;
+            margin: 0.8rem 0;
+        }
+
+        /* ── BACK BUTTON ── */
         .back-button {
             display: inline-block;
-            margin-top: 2.5rem;
-            padding: 1rem 2.5rem;
+            margin-top: 2rem;
+            padding: 0.9rem 2rem;
             background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
             color: #0a0a0a;
             text-decoration: none;
             border-radius: 12px;
             font-weight: 700;
-            transition: all 0.4s;
+            transition: all 0.3s;
             border: none;
             cursor: pointer;
-            font-size: 1.05rem;
-            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .back-button::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .back-button:hover::before {
-            width: 300px;
-            height: 300px;
+            font-size: 1rem;
+            box-shadow: 0 5px 20px rgba(255,215,0,0.3);
+            width: 100%;
+            text-align: center;
         }
 
         .back-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.5);
+            box-shadow: 0 8px 30px rgba(255,215,0,0.5);
         }
 
-        .back-button span {
-            position: relative;
-            z-index: 1;
-        }
-
-        @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .nav-links {
-                flex-direction: column;
-                gap: 0.8rem;
-                width: 100%;
-            }
-
-            .nav-link {
-                width: 100%;
-            }
-
-            .hero {
-                padding: 3rem 2rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .content-card {
-                padding: 2.5rem 1.8rem;
-            }
-
-            .content-card h1 {
-                font-size: 2rem;
-            }
-
-            .content-image {
-                height: 300px;
-            }
-        }
-
-        /* Scrollbar Styling */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #0a0a0a;
-        }
-
+        /* ── SCROLLBAR ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, #ffd700 0%, #b8860b 100%);
             border-radius: 5px;
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ffd700;
+        /* ══════════════════════════════════
+           RESPONSIVE — MOBILE
+        ══════════════════════════════════ */
+        @media (max-width: 768px) {
+
+            /* Nav: logo left, hamburger right */
+            .nav-container {
+                flex-wrap: nowrap;
+                justify-content: space-between;
+            }
+
+            .hamburger { display: flex; }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                gap: 0.5rem;
+                padding-top: 0.8rem;
+                border-top: 1px solid rgba(255,215,0,0.15);
+                margin-top: 0.8rem;
+            }
+
+            .nav-links.open { display: flex; }
+
+            /* Make nav wrap when menu opens */
+            .nav-container.menu-open {
+                flex-wrap: wrap;
+            }
+
+            .nav-link {
+                width: 100%;
+                text-align: center;
+                font-size: 1rem;
+                padding: 0.8rem 1rem;
+                white-space: normal;
+            }
+
+            .hero { padding: 2rem 1.2rem; }
+
+            .content-card { padding: 1.5rem 1rem; }
+
+            /* Stack content images vertically */
+            .content-image { flex-direction: column; }
+            .content-image img { max-width: 100%; }
+
+            /* Iframes shorter on mobile */
+            .content-text iframe { height: 300px; }
+        }
+
+        @media (max-width: 400px) {
+            .logo { font-size: 1.1rem; }
+            .content-text { font-size: 0.9rem; }
         }
     </style>
 </head>
 <body>
     <nav>
-        <div class="nav-container">
+        <div class="nav-container" id="navContainer">
             <div class="logo" onclick="showPage('home')">📚 Tarihimiz</div>
-            <div class="nav-links">
+            <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+                <span></span><span></span><span></span>
+            </div>
+            <div class="nav-links" id="navLinks">
                 <a class="nav-link" onclick="showPage('vahidettin')">Sultan Vahidettin Gerçekleri</a>
-                <a class="nav-link" onclick="showPage('kemalist')">Kemalist Rejimi Gerçerkleri</a>
+                <a class="nav-link" onclick="showPage('kemalist')">Kemalist Rejimi Gerçekleri</a>
                 <a class="nav-link" onclick="showPage('abdulhamid')">Sultan 2. Abdülhamid Gerçekleri</a>
             </div>
         </div>
     </nav>
 
     <div class="container">
+
         <!-- Ana Sayfa -->
         <div id="home" class="page active">
             <div class="hero">
-                <h1>Tarihi Tümüyle Bilmek </h1>
+                <h1>Tarihi Tümüyle Bilmek</h1>
                 <p>
-                   Günümüzde yakın tarihimizle ilgili pek çok yanlış beyanla karşılaşıyoruz. Bu sayfanın amacı, kaynaklarıyla birlikte bazı konuları inceleyip doğru bilgiyi ortaya koymaktır. Üst kısımdaki başlıklara tıklayarak ilgili kaynaklara ve arşiv belgelerine ulaşabilirsiniz.
+                    Günümüzde yakın tarihimizle ilgili pek çok yanlış beyanla karşılaşıyoruz. Bu sayfanın amacı,
+                    kaynaklarıyla birlikte bazı konuları inceleyip doğru bilgiyi ortaya koymaktır.
+                    Üst kısımdaki başlıklara tıklayarak ilgili kaynaklara ve arşiv belgelerine ulaşabilirsiniz.
                 </p>
-                <p style="margin-top: 2.5rem; font-style: italic; color: #999;">
+                <p style="margin-top: 2rem; font-style: italic; color: #999;">
                     Her konu başlığına tıklayarak içerikleri inceleyebilirsiniz.
                 </p>
             </div>
@@ -367,53 +397,50 @@
         <div id="vahidettin" class="page">
             <div class="content-card">
                 <h1>Sultan Vahidettin Gerçekleri</h1>
-                
-                <div class="content-image">
-                     <img src="Vahidettin.jpg" alt="Sultan Vahidettin" style="max-width:48%; height:auto;">
 
+                <div class="content-image">
+                    <img src="Vahidettin.jpg" alt="Sultan Vahidettin">
                 </div>
 
                 <div class="content-text">
                     <p>
-                        Sultan Vahidettin, Osmanlı İmparatorluğu'nun 36. ve son padişahıdır. 1918-1922 yılları arasında tahtta kalmış 
+                        Sultan Vahidettin, Osmanlı İmparatorluğu'nun 36. ve son padişahıdır. 1918-1922 yılları arasında tahtta kalmış
                         ve tarihin en zorlu dönemlerinden birinde imparatorluğu yönetmiştir.
                     </p>
                     <p>
-                        Birinci Dünya Savaşı'nın yıkıcı sonuçları, işgal güçlerinin varlığı ve içeride yaşanan siyasi çalkantılar 
+                        Birinci Dünya Savaşı'nın yıkıcı sonuçları, işgal güçlerinin varlığı ve içeride yaşanan siyasi çalkantılar
                         döneminde önemli kararlar almak zorunda kalmıştır.
                     </p>
                     <p>
-                        Hakkında farklı görüşler bulunmakla birlikte, tarihi olayların ve dönemin koşullarının objektif bir şekilde 
+                        Hakkında farklı görüşler bulunmakla birlikte, tarihi olayların ve dönemin koşullarının objektif bir şekilde
                         değerlendirilmesi önemlidir. Burada dönemin belgelerine ve kaynaklarına dayalı bilgiler sunulmaktadır.
                     </p>
 
-                    <h2> 27 Nisan 1920 Fevzi çakmak meclis konuşması</h2>
-                            <img src="1.jpg" alt="meclis" style="max-width:45%; height:auto;">
-                            <img src="2.jpg" alt="meclis" style="max-width:45%; height:auto;">
-                            <img src="3.jpg" alt="meclis" style="max-width:45%; height:auto;">
+                    <h2>27 Nisan 1920 Fevzi Çakmak Meclis Konuşması</h2>
+                    <div class="img-row">
+                        <img src="1.jpg" alt="meclis 1">
+                        <img src="2.jpg" alt="meclis 2">
+                        <img src="3.jpg" alt="meclis 3">
+                    </div>
 
-                    <h2> Cemal Kutay röportaji</h2>
-                        <p>Nuriye akman ile röportaji 11-14 Haziran 1995</p> 
-                        <p>Vahideddin- Elbette hain değildi. Dünyanın en namuslu adamlarından biriydi. Ölürken yastığının altından parasızlıktan alamadığı ilaçlarının reçeteleri çıktı. Bunu Tarık Mümtaz Göztepe anlatıyor. Ve cenazesini rehin ettiler San Remo'da. Akrabaları, arkadaşları cenazeyi kaçırdılar da gömüldü. Bunlar hakkında hüküm verebilmek için önce bilgili olmak lâzım. Bakın Hazine-i Hassa Reisi Refik Bey'i çağırıp, sayım yaptırdı gitmeden evvel. Oradan kaşıkçı elmasını alıp gidebilirdi. Hakkıydı, ailesinin çünkü. Kesinlikle bunlar namusu mücessem. Kafanız hiç karışmasın devrimlerin kaderi budur. Evet, Atatürk, Vahdettin'e 'vatan haini' dedi ama bence hata etti… İlk yapılacak şey, Nutuk'un bir tarih olmadığını açıkça ortaya koymak. Yani Nutuk'a isnat ederek bir hâdisenin tek başına Nutuk'un çerçevesi içinde izahı mümkün olmadığı kabul edilmelidir.</p>
+                    <h2>Cemal Kutay Röportajı</h2>
+                    <p>Nuriye Akman ile röportaj – 11-14 Haziran 1995</p>
+                    <p>Vahideddin- Elbette hain değildi. Dünyanın en namuslu adamlarından biriydi. Ölürken yastığının altından parasızlıktan alamadığı ilaçlarının reçeteleri çıktı. Bunu Tarık Mümtaz Göztepe anlatıyor. Ve cenazesini rehin ettiler San Remo'da. Akrabaları, arkadaşları cenazeyi kaçırdılar da gömüldü. Bunlar hakkında hüküm verebilmek için önce bilgili olmak lâzım. Bakın Hazine-i Hassa Reisi Refik Bey'i çağırıp, sayım yaptırdı gitmeden evvel. Oradan kaşıkçı elmasını alıp gidebilirdi. Hakkıydı, ailesinin çünkü. Kesinlikle bunlar namusu mücessem. Kafanız hiç karışmasın devrimlerin kaderi budur. Evet, Atatürk, Vahdettin'e 'vatan haini' dedi ama bence hata etti… İlk yapılacak şey, Nutuk'un bir tarih olmadığını açıkça ortaya koymak.</p>
 
-                    <h2>Ecevit: Vahidettin hain değil</h2>
-                        <img src="Capture d'écran 2025-10-27 210427.png" alt="meclis" style="max-width:45%; height:auto;">
+                    <h2>Ecevit: Vahidettin Hain Değil</h2>
+                    <img src="Capture d'écran 2025-10-27 210427.png" alt="Ecevit açıklaması">
 
                     <h2>İstanbul Hükümeti'nin Kuvâ-yi Milliyecilere Desteği (Şahbaba)</h2>
-                        <img src="istanbul_kuvayi_destek.jpeg" alt="meclis" style="max-width:45%; height:auto;">
+                    <img src="istanbul_kuvayi_destek.jpeg" alt="destek belgesi">
 
-                    <h2>Sultan Vahideddin İstanbul'dan Kaçmadı, İkna Edilerek Yalanlarla Çıkarıldı (Şahbaba)</h2>
-                        <img src="padisah_kacmadi.jpeg" alt="meclis" style="max-width:45%; height:auto;">
+                    <h2>Sultan Vahideddin İstanbul'dan Kaçmadı, İkna Edilerek Çıkarıldı (Şahbaba)</h2>
+                    <img src="padisah_kacmadi.jpeg" alt="belge">
 
-                    <h2>Sultan Vahideddin Sevr'i İmzalamadı ve Yürürlüğe Girmemesi İçin Elinden Geleni Yaptı (Şahbaba)</h2>
-                        <img src="sevri_imzalamadi.jpeg" alt="meclis" style="max-width:45%; height:auto;">
-                    
-                    
-
-                        
+                    <h2>Sultan Vahideddin Sevr'i İmzalamadı (Şahbaba)</h2>
+                    <img src="sevri_imzalamadi.jpeg" alt="belge">
                 </div>
 
-                <button class="back-button" onclick="showPage('home')"><span>← Ana Sayfaya Dön</span></button>
+                <button class="back-button" onclick="showPage('home')">← Ana Sayfaya Dön</button>
             </div>
         </div>
 
@@ -421,187 +448,105 @@
         <div id="kemalist" class="page">
             <div class="content-card">
                 <h1>Kemalist Rejimi Gerçekleri</h1>
-                
+
                 <div class="content-image">
-                            <img src="kamal.jpg" alt="kamal" style="max-width:45%; height:auto;">
+                    <img src="kamal.jpg" alt="Kemal Paşa">
                 </div>
 
                 <div class="content-text">
                     <p>
-                        Türkiye Cumhuriyeti'nin kuruluş dönemi ve sonrasında yapılan reformlar, toplumda köklü değişikliklere 
-                        yol açmıştır. Bu dönemde alınan kararlar ve uygulamalar farklı kesimler tarafından farklı şekillerde 
+                        Türkiye Cumhuriyeti'nin kuruluş dönemi ve sonrasında yapılan reformlar, toplumda köklü değişikliklere
+                        yol açmıştır. Bu dönemde alınan kararlar ve uygulamalar farklı kesimler tarafından farklı şekillerde
                         değerlendirilmektedir.
                     </p>
-                    <p>
-                        Bazı görüşlere göre, yapılan bazı uygulamalar toplumun geleneksel yapısında önemli değişikliklere 
-                        neden olmuş ve tartışmalara yol açmıştır. Dini kurumlarla ilgili alınan kararlar, eğitim sistemindeki 
-                        değişiklikler ve kültürel dönüşümler eleştiri konusu olmuştur.
-                    </p>
-                <h2> Yıldız sarayının gazinoya çevirilmesi
-                    <br>
-                     <img src="4.jpeg" alt="saray" style="max-width:45%; height:auto;">
 
-                <h2> Arapca Kuran ve Namaz yasakları</h2>
-                    <img src="6.jpg" alt="yasak" style="max-width:45%; height:auto;">
+                    <h2>Yıldız Sarayının Gazinoya Çevrilmesi</h2>
+                    <img src="4.jpeg" alt="saray">
 
-                <h2> Meclis açılışı</h2>
-                    <img src="7.jpg" alt="yasak" style="max-width:45%; height:auto;">
+                    <h2>Arapça Kuran ve Namaz Yasakları</h2>
+                    <img src="6.jpg" alt="yasak belgesi">
 
-                <h2> Kemal paşa araplar tarafından esir alındı iddiası</h2>
-                    <p> Jeremy Wilson "Lawrence of Arabia"</p>
-                    <img src="8.jpg" alt="yasak" style="max-width:45%; height:auto;">
+                    <h2>Meclis Açılışı</h2>
+                    <img src="7.jpg" alt="meclis açılışı">
 
-                <h2> Uğur mumcu: Kazım Karabekir anlatıyor</h2>
-                    <img src="9.jpg" alt="yasak" style="max-width:45%; height:auto;">
-                    <p>M. Kemal: Evet Karabekir, arap oğlunun (haşa Peygamberimizin) yavelerini (saçmalıklarını / yalanlarını) Türk oğullarına öğretmek için Kur’ân’ı Türkçeye tercüme ettireceğim. Ve böylece de okutacağım. Ta ki budalalık edip de aldanmakta devam etmesinler…</p>
+                    <h2>Kemal Paşa Araplar Tarafından Esir Alındı İddiası</h2>
+                    <p>Jeremy Wilson – "Lawrence of Arabia"</p>
+                    <img src="8.jpg" alt="belge">
 
-               <h2> Risale-i Nur da Kemal paşa hakkında konuşulduğunu düşündüğüm yerler</h2>
-                    <p> asayı musa sayfa 81</p>
-                     <img src="11.jpeg" alt="yasak" style="max-width:45%; height:auto;">
-                    <br>
-                    <p> asayı musa sayfa 173</p>
-                     <img src="10.jpeg" alt="yasak" style="max-width:45%; height:auto;">
-               <h2>1936 chp genel sekreterliğine bağlı ülkü dergisinde halk evleri tarifi</h2>
-                     <img src="12.jpg" alt="yasak" style="max-width:45%; height:auto;">
+                    <h2>Uğur Mumcu: Kazım Karabekir Anlatıyor</h2>
+                    <img src="9.jpg" alt="belge">
+                    <p>M. Kemal: Evet Karabekir, arap oğlunun (haşa Peygamberimizin) yavelerini Türk oğullarına öğretmek için Kur'ân'ı Türkçeye tercüme ettireceğim…</p>
 
-               <h2>Son posta gazetesi (29 ağustos 1930 tarihli)</h2>  
-                    <p> bir vatandaş, ailesindeki kadinların jandarma tarafından ırzlarına geçildiğini anlatıyor</p>
-                         <img src="14.jpg" alt="gazete" style="max-width:45%; height:auto;">
+                    <h2>Risale-i Nur – Asayı Musa Sayfa 81</h2>
+                    <img src="11.jpeg" alt="risale">
 
-                <h2>beş kuruşa satılan Osmanlı evrakları (kaynak: TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
-                    <img src="15.jpg" alt="evraklar" style="max-width:45%; height:auto;">
-                    <br>
-                    <img src="16.jpg" alt="gazete" style="max-width:45%; height:auto;">
+                    <h2>Risale-i Nur – Asayı Musa Sayfa 173</h2>
+                    <img src="10.jpeg" alt="risale">
 
-                <h2>Camilerde bütün cemaatin namaz kılarken şapka giymeleri suretiyle yeknesaklığı temin etmeleri. (kaynak: TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
-                    <p>Din ile devlet işlerinin ayrı olduğunu söyleyenlerin yalancı olduklarının ve asıl maksatlarının İslam’a zarar vermek olduğunun delillerinden biridir.</p>
-                        <img src="Camilerde bütün cemaatin namaz kılarken şapka giymeleri suretiyle yeknesaklığı temin etmeleri..jpg" alt="evraklar" style="max-width:45%; height:auto;">
+                    <h2>1936 CHP Ülkü Dergisinde Halk Evleri Tarifi</h2>
+                    <img src="12.jpg" alt="dergi">
 
-                <h2>Camilerde Arapça yasağı (kaynak: TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
-                    <img src="490_01_611_121_1_2.jpg" alt="evraklar" style="max-width:45%; height:auto;">
+                    <h2>Son Posta Gazetesi (29 Ağustos 1930)</h2>
+                    <img src="14.jpg" alt="gazete">
 
-                <h2>Arapça tekbir alan Karamanlı Hasan Gemalmaz'a TÜrkçe tekbir alınması için tebligat yapılıp yapılmadığının bildirilmesi. (kaynak: TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
-                    <br>
-                <iframe
-                  src="Arapça tekbir alan Karamanlı Hasan Gemalmaz'a TÜrkçe tekbir alınması için tebligat yapılıp yapılmadığının bildirilmesi..pdf"
-                  width="50%"
-                  height="600"
-                  title="Evrak"
-                  style="border: none;">
-                </iframe>
+                    <h2>Beş Kuruşa Satılan Osmanlı Evrakları (TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
+                    <img src="15.jpg" alt="evrak 1">
+                    <img src="16.jpg" alt="evrak 2">
 
+                    <h2>Camilerde Şapkayla Namaz (TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
+                    <p>Din ile devlet işlerinin ayrı olduğunu söyleyenlerin yalancı olduklarının delillerinden biridir.</p>
+                    <img src="Camilerde bütün cemaatin namaz kılarken şapka giymeleri suretiyle yeknesaklığı temin etmeleri..jpg" alt="evrak">
 
-                <h2>arapca ezan yasagi kanunu. </h2>
-                <br>
-                <iframe
-                  src="arapca_ezan_yasagi_kanunu.pdf"
-                  width="50%"
-                  height="600"
-                  title="Evrak"
-                  style="border: none;">
-                </iframe>
+                    <h2>Camilerde Arapça Yasağı (TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
+                    <img src="490_01_611_121_1_2.jpg" alt="evrak">
 
-                
-            
+                    <h2>Karamanlı Hasan Gemalmaz'a Türkçe Tekbir Tebligatı (TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
+                    <iframe src="Arapça tekbir alan Karamanlı Hasan Gemalmaz'a TÜrkçe tekbir alınması için tebligat yapılıp yapılmadığının bildirilmesi..pdf" title="Evrak"></iframe>
 
-                <h2>Camilerde dua ve vaaz esnasında Arapça tekbir alan cemaata uyarıda bulunulması için imam ve müezzinlere tebligat yapılıp yapılmadığının bildirilmesi. </h2>
-                <br>
-                <iframe
-                  src="Camilerde dua ve vaaz esnasında Arapça tekbir alan cemaata uyarıda bulunulması için imam ve müezzinlere tebligat yapılıp yapılmadığının bildirilmesi..pdf"
-                  width="50%"
-                  height="600"
-                  title="Evrak"
-                  style="border: none;">
-                </iframe>    
+                    <h2>Arapça Ezan Yasağı Kanunu</h2>
+                    <iframe src="arapca_ezan_yasagi_kanunu.pdf" title="Ezan Yasağı Kanunu"></iframe>
 
-                <h2>Çankırı'nın Çerkeş kazasında İsmail Yiğit'in namaz arasında Arapça tekbir getirdiğinden hakkında soruşturma açıldığı. </h2>
-                <br>
-                <iframe
-                  src="Çankırı'nın Çerkeş kazasında İsmail Yiğit'in namaz arasında Arapça tekbir getirdiğinden hakkında soruşturma açıldığı..pdf"
-                  width="50%"
-                  height="600"
-                  title="Evrak"
-                  style="border: none;">
-                </iframe>    
+                    <h2>Camilerde Arapça Tekbir Yasağı Tebligatı</h2>
+                    <iframe src="Camilerde dua ve vaaz esnasında Arapça tekbir alan cemaata uyarıda bulunulması için imam ve müezzinlere tebligat yapılıp yapılmadığının bildirilmesi..pdf" title="Evrak"></iframe>
 
-                <h2>Enver ve Cemal Paşaların ifrat derecede Alman siyaseti gütmelerine karşı milli bir siyaset takip etmek üzere İttihat ve Terakki azası Osmanlı Erkan-ı Harbiyesi subaylarından Mustafa Kemal Paşa'nın başkanlığında yeni bir fıka kurulduğu, Irak ve Sina cephelerinde Osmanlı ordusunun yenilgiye uğramasının Enver ve Cemal paşaların konumlarını sarstığı ve yeni fırkanın idareyi ele almak için müsait bir zaman gözetmekte olduğu ifadelerini havi Mekke'de çıkan el-Kıble gazetesinden naklen La Tribune de Geneve gazetesinin "Enver ve Cemal Paşalar İlk Fırsatta İktidardan Düşecekler" başlıklı makalesi. (kaynak: TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
-                    <img src="ENVERV~1.JPG" alt="evraklar" style="max-width:45%; height:auto;">
+                    <h2>İsmail Yiğit'in Arapça Tekbir Soruşturması (Çankırı/Çerkeş)</h2>
+                    <iframe src="Çankırı'nın Çerkeş kazasında İsmail Yiğit'in namaz arasında Arapça tekbir getirdiğinden hakkında soruşturma açıldığı..pdf" title="Evrak"></iframe>
 
-                <h2>İstanbul'da Kağıt ve Basım İşleri AŞ Matbaası'nda basılan Ayet, Hadis ve ahlaki bilgiler veren Arapca levhaların dağıtımının durdurulması vetoplatılması. (kaynak: TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
-                    <img src="İstanbul'da Kağıt ve Basım İşleri AŞ Matbaası'nda basılan Ayet, Hadis ve ahlaki bilgiler veren Arapca levhaların dağıtımının durdurulması vetoplatılması..jpg" alt="evraklar" style="max-width:45%; height:auto;">
+                    <h2>Enver ve Cemal Paşaların Alman Siyaseti Hakkında Makale (TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
+                    <img src="ENVERV~1.JPG" alt="evrak">
 
-                <h2>Ramazan'da hutbelerin Diyanet'in tespit ettiği konularda, Diyanet'çebelge verilen vaizlerce okunabileceği, ezan ve tekbirlerin Türkçe okutturulacağına dair. </h2>
-                <br>
-                <iframe
-                  src="Ramazan'da hutbelerin Diyanet'in tespit ettiği konularda, Diyanet'çebelge verilen vaizlerce okunabileceği, ezan ve tekbirlerin Türkçe okutturulacağına dair..pdf"
-                  width="50%"
-                  height="600"
-                  title="Evrak"
-                  style="border: none;">
-                </iframe>    
+                    <h2>Arapça Levhaların Dağıtımının Durdurulması (TC Cumhurbaşkanlığı Devlet Arşivleri)</h2>
+                    <img src="İstanbul'da Kağıt ve Basım İşleri AŞ Matbaası'nda basılan Ayet, Hadis ve ahlaki bilgiler veren Arapca levhaların dağıtımının durdurulması vetoplatılması..jpg" alt="evrak">
 
+                    <h2>Ramazan'da Ezan ve Tekbirlerin Türkçe Okutturulması</h2>
+                    <iframe src="Ramazan'da hutbelerin Diyanet'in tespit ettiği konularda, Diyanet'çebelge verilen vaizlerce okunabileceği, ezan ve tekbirlerin Türkçe okutturulacağına dair..pdf" title="Evrak"></iframe>
 
-                 <h2>kemalizm Döneminde Ülke Genelinde Çarşaf Yasağına Gayret (cumhuriyet gazetesi 1 eylül 1935)</h2>
-                    <img src="carsaf_yasagi.jpeg" alt="evraklar" style="max-width:45%; height:auto;">
+                    <h2>Kemalizm Döneminde Çarşaf Yasağı (Cumhuriyet Gazetesi – 1 Eylül 1935)</h2>
+                    <img src="carsaf_yasagi.jpeg" alt="gazete">
 
-                 <h2>ismet inönü'nün, Kazım Karabekir ile tartışırken İslam'a yönelik hakaret içeren ifadeler kullanmaktan geri durmuyor (ugur mumcu; kazim karabekir anlatiyor)</h2>
-                    <img src="ismetin_islama_hakareti.png" alt="evraklar" style="max-width:45%; height:auto;">
+                    <h2>İsmet İnönü'nün İslam'a Hakareti (Uğur Mumcu – Kazım Karabekir Anlatıyor)</h2>
+                    <img src="ismetin_islama_hakareti.png" alt="belge">
 
-                 <h2>Kazım Karabekir, mustafa kemal'in yazdığı Nutuk'taki iddialara cevap vermek istediğinde sansüre uğruyor. </h2>
-                    <img src="karabekir_nutuk.jpeg" alt="evraklar" style="max-width:45%; height:auto;">
+                    <h2>Kazım Karabekir'in Nutuk'a Cevabının Sansüre Uğraması</h2>
+                    <img src="karabekir_nutuk.jpeg" alt="belge">
 
-                <h2>kemal Paşa'nın İngilizlerle yakın ilişkiler kurma arzusunu ve onlara karşı bir düşmanlık beslemediğini gazetede ifade etmesi (ŞahBaba). </h2>
-                    <img src="kemal_ingiliz_yanasmasi.jpeg" alt="evraklar" style="max-width:45%; height:auto;">
+                    <h2>Kemal Paşa'nın İngilizlerle Yakın İlişki Arzusu (Şahbaba)</h2>
+                    <img src="kemal_ingiliz_yanasmasi.jpeg" alt="belge">
 
-                <h2>kemal Paşa'nın hilafetin esaret altında olduğunu ifade etmesi (ŞahBaba). </h2>
-                    <img src="kemal_meclis_hilafet.jpeg" alt="evraklar" style="max-width:45%; height:auto;">
+                    <h2>Kemal Paşa'nın Hilafetin Esaret Altında Olduğunu İfade Etmesi (Şahbaba)</h2>
+                    <img src="kemal_meclis_hilafet.jpeg" alt="belge">
 
-                <h2>kemal Islama ve Peygamber Aleyhisselam'a hakaret ediyor. </h2>
-                    <img src="kemalin_islama_hakareti.jpeg" alt="evraklar" style="max-width:45%; height:auto;">
+                    <h2>Kemal İslam'a ve Peygamber Aleyhisselam'a Hakaret Ediyor</h2>
+                    <img src="kemalin_islama_hakareti.jpeg" alt="belge">
 
-                <h2>Rıza Tevfik, Kemal Paşa'nın güvenilir olmadığını ifade ediyor (Şahbaba).</h2>
-                    <img src="rizatevfik_kemal.jpeg" alt="evraklar" style="max-width:45%; height:auto;">
+                    <h2>Rıza Tevfik, Kemal Paşa'nın Güvenilir Olmadığını İfade Ediyor (Şahbaba)</h2>
+                    <img src="rizatevfik_kemal.jpeg" alt="belge">
 
-
-                <h2>Tokat Milletvekili Ahmet Gürkan, kiraya verilen camilerle ilgili bir konuya değinerek, bu alanlarda fuhuş yapıldığını söylüyor(TBMM Tutanak Dergisi, Cilt 22, 4 Mayıs 1953).</h2>
-                    <img src="satilan_camiler.jpeg" alt="evraklar" style="max-width:45%; height:auto;">
-
-
-                
-
-                
-
-                    
-
-                
-
-                
-
-                
-
-                
-
-
-                
-
-
-                
-                
-        
-
-                    
-
-
-                
-
-
-
-                    
-                    
-                    
+                    <h2>Tokat Milletvekili Ahmet Gürkan – Kiralanan Camilerde Fuhuş (TBMM Tutanak Dergisi, Cilt 22, 4 Mayıs 1953)</h2>
+                    <img src="satilan_camiler.jpeg" alt="belge">
                 </div>
 
-                <button class="back-button" onclick="showPage('home')"><span>← Ana Sayfaya Dön</span></button>
+                <button class="back-button" onclick="showPage('home')">← Ana Sayfaya Dön</button>
             </div>
         </div>
 
@@ -609,73 +554,65 @@
         <div id="abdulhamid" class="page">
             <div class="content-card">
                 <h1>Sultan 2. Abdülhamid Gerçekleri</h1>
-                
+
                 <div class="content-image">
-                    <img src="Abdülhamid.jpg" alt="sultan" style="max-width:44%; height:auto;">
+                    <img src="Abdülhamid.jpg" alt="Sultan Abdülhamid">
                 </div>
 
                 <div class="content-text">
                     <p>
-                        Sultan 2. Abdülhamid, 1876-1909 yılları arasında 33 yıl tahtta kalmış ve Osmanlı İmparatorluğu'nun 
-                        en uzun süre hüküm süren padişahlarından biridir. Dönemi, modernleşme çabaları ve zorlu siyasi 
+                        Sultan 2. Abdülhamid, 1876-1909 yılları arasında 33 yıl tahtta kalmış ve Osmanlı İmparatorluğu'nun
+                        en uzun süre hüküm süren padişahlarından biridir. Dönemi, modernleşme çabaları ve zorlu siyasi
                         gelişmelerle doludur.
                     </p>
                     <p>
-                        Eğitim, ulaşım ve altyapı alanlarında önemli yatırımlar yapmış, Hicaz Demiryolu gibi büyük projeleri 
-                        hayata geçirmiştir. İstihbarat teşkilatının güçlendirilmesi ve devlet yönetiminde merkeziyetçi bir 
+                        Eğitim, ulaşım ve altyapı alanlarında önemli yatırımlar yapmış, Hicaz Demiryolu gibi büyük projeleri
+                        hayata geçirmiştir. İstihbarat teşkilatının güçlendirilmesi ve devlet yönetiminde merkeziyetçi bir
                         yaklaşım benimsemesi döneminin önemli özelliklerindendir.
                     </p>
-                    <p>
-                        Hakkında farklı değerlendirmeler yapılmakla birlikte, döneminin önemli bir devlet adamı olarak 
-                        imparatorluğu ayakta tutmak için çaba sarf ettiği kabul edilmektedir.
-                    </p>
-                    <br>
-                    <h2>Babam Sultan Abdülhamid : Ayşe Osmanoğlu</h2>
-                     <img src="13.jpg" alt="hatirat" style="max-width:45%; height:auto;">
-                     <br>
-                     <h3>Sultan Abdülhamid’in annesi ermeni iddiası</h3>
-                      <p>Büyükbabamın bütün haremleri Çerkeş’tir. Saraya Rum ve Ermeni cinsinden bir kadının girdiği ne görülmüş, ne de işitilmiştir. Böyle olduğu halde babamın şahsî düşman­ lan, annesinin Çandır admda bir Ermeni kadını olduğunu söylemişlerdir. Bu iddiayı ilk defa ortaya atan, «Abdül- hamid’in Evâil-i Saltanatı» adlı eserin sahibi Ahmed Sâ- ib’dir^. Saray hayatını bilmeyen saf halkı bununla kandıak babama karşı bir düşmanlık doğurmaya kalkmıştır. Sultan Abdülmecid'in bütün haremlerini, Padişah zevcesi oldukları için ihtimal asîl sayan Türk milleti, bir Erme­niden doğmuş olan Sultan Hamid’i aşağı görür düşünce­siyle uydurulan bu yalan tutunmamışsa da dedikodu halin­ de söylenmekten de geri kalmamıştır. </p>
-                    <br>
-                     <h3>Sultan Abdülhamid'e karşı çıkan iftira fetva</h3>
-                     <p>O zaman ikinci askerî şahıs ki bunun da Arif Hikmet Paşa olduğunu sonradan öğrendik, fetva suretini okumaya başladı. Fetva şöyle başlıyordu: «İmâm-ı Müslîmîn olan Zeyd bazı mesâil-i mühimme-i şer’iyyeyi kütüb-i şer’îyyeden tayyü ihrâc ve kütüb-i mezkûreyi men’ü hark ü İh- rak...» Bu «kütüb'i şer’iyyeyi hark ü ihrak»" yeni «şer’i kitap­ ları yırtıp yakma» sözleri geçince babam yüksek sesle, «Ben hangi kütübi şer’iyyeyi yakmışım? Hasbenaliah de­ rim,» dedi ve fetvayı sonuna kadar dinledi. Fetvanın okun­ ması bitince, ,«Bu kararı hangi makam verdi?» diye Arif Hikmet Paşa’ya sordu. Arif Hikmet, «Meclis-i Millî,» diye cevap verdi. Bunun üzerine babam, «Ya... Öyle mi? Bu meclise riyaset eden kimdir?» dedi. Ve Âyan Reisi Said Paşa olduğu cevabını alınca hayret eden bir seda ile, «Said Paşa, öyle mi?» dedikten sonra şu sözleri söyledi: «Otuzüç sene millet ve devletim için, memleketimin selâmeti için çalıştım. Elimden geldiği kadar hizmet ettim. Hâkimim Al­lah ve beni muhakeme edecek de Resûlullah’tır. Bu mem­leketi nasıl buldumsa öylece teslim ediyorum. Hiç kimse­ ye bir kanris toprak vermedim. Hizmetimi ancak Cenab-ı Hakk’m takdirine bırakıyorum. Ne çare ki düşmanlarım bütün hizmetime kara bir çarşaf çekmek istediler ve mu­vaffak da oldular.»</p>
-                    <br>
-                    <h3>Meşrutiyetin yanlısı bir padişah:</h3>
-                    <p>Babam yüzüme şöyle bir baktı; «Kızım, siz de mi yanlış düşünüyorsunuz?» dedi. «Ben daima meşrutiyet taraftarı idim. Hattâ padişahlığımın ilk zamanlarında, o zamanki Vükelâya bunu kabul ettirmek için ısrar etmiştim. Sonradan bunu kaldırmamızın milletin çok büyük zararlara uğrayacağı anlaşılmasından dolayı idi. Maazallah devletimizin dağılmasına ramak kalmıştı. Beni meşrutiyet taraftarı olmamakla itham edenler emin olsunlar ki yanıldıklarını anlayacaklardır. Kızım, bunu iyi biliniz ki bu İkinci Meşrutiyeti kendi arzumla verdim. Eğer mâni olmak isteseydim,» (burada biraz durdu) «yapacak şeyi de pek âlâ bilirdim. Esasen meşrutiyetin ilânından önce, bütün devletlerin kanun esaslarını tercüme ettiriyor; bize en uygun olanını intihap etmek, bu suretle devleti dağılmaktan kurtaracak bir kanûn-ı esâsiye mâlik olmak ve meşrutiyeti bu suretle ilân etmek istiyordum. Ne yapalım, Allah nasib etmedi.» Burada gözleri doldu. «Milletimin başında tecrübeli bir baba gibi bulunmak; böylelikle vatanımın selâmeti uğruna çalışmak azmü kararında idim. Düşmanlarım bu fırsatı bana vermediler. Türlü güçlükler ve iftiralar icat ettiler. Nihayet 31 Mart Vak'ası meydana çıktı. Ben, meşrutî bir hükümdarın yapacağını bir hatve aşmadım. Ne ileri, ne de geri gittim. Lâkin beni başka türlü başlarından def edemezlerdi. Ben takdire inanırım. Bu bize Allah’tandır. Eğer 31 Mart Vak'ası'nı ben ihdas etmiş olsaydım, bu şekilde yüzüme gözüme bulaştırmazdım. Nasıl yapılacağını pekâlâ bilirdim. Tarih bu hakikati bir gün meydana çıkaracaktır. Bundan dolayı kalbim müsterihtir. Kızım! Şahsım için iki Türk'ün, asker evlâtlarımın birbirini kırmasını, kan dökülmesini Allah hakkı için istemedim. Bana bu iftirayı yükleyenleri Allahıma havale ediyorum.»</p>
+
+                    <h2>Babam Sultan Abdülhamid – Ayşe Osmanoğlu</h2>
+                    <img src="13.jpg" alt="hatirat">
+
+                    <h3>Sultan Abdülhamid'in Annesi Ermeni İddiası</h3>
+                    <p>Büyükbabamın bütün haremleri Çerkeş'tir. Saraya Rum ve Ermeni cinsinden bir kadının girdiği ne görülmüş, ne de işitilmiştir. Böyle olduğu halde babamın şahsî düşmanları, annesinin Çandır adında bir Ermeni kadını olduğunu söylemişlerdir. Bu iddiayı ilk defa ortaya atan, «Abdülhamid'in Evâil-i Saltanatı» adlı eserin sahibi Ahmed Sâib'dir. Saray hayatını bilmeyen saf halkı bununla kandırmak ve babama karşı bir düşmanlık doğurmaya kalkmıştır. Sultan Abdülmecid'in bütün haremlerini, Padişah zevcesi oldukları için ihtimal asîl sayan Türk milleti, bir Ermeniden doğmuş olan Sultan Hamid'i aşağı görür düşüncesiyle uydurulan bu yalan tutunmamışsa da dedikodu halinde söylenmekten de geri kalmamıştır.</p>
+
+                    <h3>Sultan Abdülhamid'e Karşı Çıkan İftira Fetva</h3>
+                    <p>O zaman ikinci askerî şahıs ki bunun da Arif Hikmet Paşa olduğunu sonradan öğrendik, fetva suretini okumaya başladı. Fetva şöyle başlıyordu: «İmâm-ı Müslîmîn olan Zeyd bazı mesâil-i mühimme-i şer'iyyeyi kütüb-i şer'îyyeden tayyü ihrâc ve kütüb-i mezkûreyi men'ü hark ü ihrak…» Bu «kütüb-i şer'iyyeyi hark ü ihrak» yani «şer'i kitapları yırtıp yakma» sözleri geçince babam yüksek sesle, «Ben hangi kütübi şer'iyyeyi yakmışım? Hasbenallah derim,» dedi ve fetvayı sonuna kadar dinledi. Fetvanın okunması bitince, «Bu kararı hangi makam verdi?» diye Arif Hikmet Paşa'ya sordu. Arif Hikmet, «Meclis-i Millî,» diye cevap verdi. Bunun üzerine babam, «Ya… Öyle mi? Bu meclise riyaset eden kimdir?» dedi. Ve Âyan Reisi Said Paşa olduğu cevabını alınca hayret eden bir seda ile, «Said Paşa, öyle mi?» dedikten sonra şu sözleri söyledi: «Otuzüç sene millet ve devletim için, memleketimin selâmeti için çalıştım. Elimden geldiği kadar hizmet ettim. Hâkimim Allah ve beni muhakeme edecek de Resûlullah'tır. Bu memleketi nasıl buldumsa öylece teslim ediyorum. Hiç kimseye bir karış toprak vermedim. Hizmetimi ancak Cenab-ı Hakk'ın takdirine bırakıyorum. Ne çare ki düşmanlarım bütün hizmetime kara bir çarşaf çekmek istediler ve muvaffak da oldular.»</p>
+
+                    <h3>Meşrutiyetin Yanlısı Bir Padişah</h3>
+                    <p>Babam yüzüme şöyle bir baktı; «Kızım, siz de mi yanlış düşünüyorsunuz?» dedi. «Ben daima meşrutiyet taraftarı idim. Hattâ padişahlığımın ilk zamanlarında, o zamanki Vükelâya bunu kabul ettirmek için ısrar etmiştim. Sonradan bunu kaldırmamızın milletin çok büyük zararlara uğrayacağı anlaşılmasından dolayı idi. Maazallah devletimizin dağılmasına ramak kalmıştı. Beni meşrutiyet taraftarı olmamakla itham edenler emin olsunlar ki yanıldıklarını anlayacaklardır. Kızım, bunu iyi biliniz ki bu İkinci Meşrutiyeti kendi arzumla verdim. Eğer mâni olmak isteseydim,» (burada biraz durdu) «yapacak şeyi de pek âlâ bilirdim. Esasen meşrutiyetin ilânından önce, bütün devletlerin kanun esaslarını tercüme ettiriyor; bize en uygun olanını intihap etmek, bu suretle devleti dağılmaktan kurtaracak bir kanûn-ı esâsiye mâlik olmak ve meşrutiyeti bu suretle ilân etmek istiyordum. Ne yapalım, Allah nasib etmedi.» Burada gözleri doldu. «Milletimin başında tecrübeli bir baba gibi bulunmak; böylelikle vatanımın selâmeti uğruna çalışmak azmü kararında idim. Düşmanlarım bu fırsatı bana vermediler. Türlü güçlükler ve iftiralar icat ettiler. Nihayet 31 Mart Vak'ası meydana çıktı. Ben, meşrutî bir hükümdarın yapacağını bir hatve aşmadım. Ne ileri, ne de geri gittim. Lâkin beni başka türlü başlarından def edemezlerdi. Ben takdire inanırım. Bu bize Allah'tandır. Eğer 31 Mart Vak'ası'nı ben ihdas etmiş olsaydım, bu şekilde yüzüme gözüme bulaştırmazdım. Nasıl yapılacağını pekâlâ bilirdim. Tarih bu hakikati bir gün meydana çıkaracaktır. Bundan dolayı kalbim müsterihtir. Kızım! Şahsım için iki Türk'ün, asker evlâtlarımın birbirini kırmasını, kan dökülmesini Allah hakkı için istemedim. Bana bu iftirayı yükleyenleri Allahıma havale ediyorum.»</p>
                 </div>
 
-                <button class="back-button" onclick="showPage('home')"><span>← Ana Sayfaya Dön</span></button>
+                <button class="back-button" onclick="showPage('home')">← Ana Sayfaya Dön</button>
             </div>
         </div>
-    </div>
+
+    </div><!-- /container -->
 
     <script>
         function showPage(pageId) {
-            // Tüm sayfaları gizle
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
-            
-            // Seçilen sayfayı göster
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
-            
-            // Sayfanın en üstüne kaydır
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            // close menu on navigation
+            closeMenu();
+        }
+
+        function toggleMenu() {
+            const hamburger  = document.getElementById('hamburger');
+            const navLinks   = document.getElementById('navLinks');
+            const navContainer = document.getElementById('navContainer');
+            hamburger.classList.toggle('open');
+            navLinks.classList.toggle('open');
+            navContainer.classList.toggle('menu-open');
+        }
+
+        function closeMenu() {
+            document.getElementById('hamburger').classList.remove('open');
+            document.getElementById('navLinks').classList.remove('open');
+            document.getElementById('navContainer').classList.remove('menu-open');
         }
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
